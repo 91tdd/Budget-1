@@ -71,5 +71,30 @@ namespace Budget
             var actual = _calculator.GetValidBudgetBy(range);
             Assert.AreEqual(1528, actual);
         }
+        [TestMethod]
+        public void HaveBudget_20180201_20180415()
+        {
+
+            var range = new InputRange("2018-02-01", "2018-04-15");
+            _repository.GetBudgets().Returns(new List<Budget>
+            {
+                new Budget
+                {
+                    YearMonth = "201802",
+                    Amount = 28
+                },
+                new Budget
+                {
+                    YearMonth = "201803",
+                    Amount = 3100
+                },new Budget
+                {
+                    YearMonth = "201804",
+                    Amount = 30000
+                }
+            });
+            var actual = _calculator.GetValidBudgetBy(range);
+            Assert.AreEqual(18128, actual);
+        }
     }
 }

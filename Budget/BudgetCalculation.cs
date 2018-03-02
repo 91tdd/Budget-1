@@ -20,13 +20,8 @@ namespace Budget
             var from = inputRange.From.ToString("yyyyMM");
             if (inputRange.To.AddDays(1).Day == inputRange.From.Day)
                 return budget.Where(x => x.YearMonth == from).Select(d => d.Amount).FirstOrDefault();
-            var months = new Dictionary<string, DateTime>();
-            var a = inputRange.From;
-            while (inputRange.To.Month - a.Month >= 0)
-            {
-                months.Add(a.ToString("yyyyMM"),a);
-                a = a.AddMonths(1);
-            }
+            var months = inputRange.GetRangeMonths();
+            
             var result = 0;
             foreach (var month in months)
             {
@@ -44,7 +39,7 @@ namespace Budget
                     result += totalBudget / totaldays * inputRange.GetDayofTo();
                     continue;
                 }
-                result += budget.Where(x => x.YearMonth == from).Select(d => d.Amount).FirstOrDefault();
+                result += budget.Where(x => x.YearMonth == month.Key).Select(d => d.Amount).FirstOrDefault();
 
             }
             return result;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Budget
 {
@@ -33,5 +34,16 @@ namespace Budget
             return To.Day;
         }
 
+        public Dictionary<string, DateTime> GetRangeMonths()
+        {
+            var months = new Dictionary<string, DateTime>();
+            var a = From;
+            while (To.Month - a.Month >= 0)
+            {
+                months.Add(a.ToString("yyyyMM"), a);
+                a = a.AddMonths(1);
+            }
+            return months;
+        }
     }
 }
