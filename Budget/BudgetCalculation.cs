@@ -16,6 +16,8 @@ namespace Budget
 
         public decimal GetValidBudgetBy(InputRange inputRange)
         {
+            if (!inputRange.IsValid())
+                throw new ArgumentException("Not a valid From/To date time");
             var budget = _repo.GetBudgets();
             
             var months = inputRange.GetRangeMonths();

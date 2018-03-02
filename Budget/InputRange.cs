@@ -45,5 +45,10 @@ namespace Budget
             }
             return months;
         }
+
+        public bool IsValid()
+        {
+            return To > From;
+        }
     }
 }

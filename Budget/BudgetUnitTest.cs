@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 
@@ -112,6 +113,23 @@ namespace Budget
             });
             var actual = _calculator.GetValidBudgetBy(range);
             Assert.AreEqual(6, actual);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void InvalidRange()
+        {
+
+            var range = new InputRange("2018-02-15", "2018-2-10");
+            _repository.GetBudgets().Returns(new List<Budget>
+            {
+                new Budget
+                {
+                    YearMonth = "201802",
+                    Amount = 28
+                },
+            });
+            var actual = _calculator.GetValidBudgetBy(range);
         }
     }
 }
