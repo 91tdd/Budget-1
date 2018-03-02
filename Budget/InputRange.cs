@@ -13,5 +13,25 @@ namespace Budget
             To = DateTime.Parse(to);
 
         }
+
+        public int GetYearofFrom()
+        {
+            return From.Year;
+        }
+        public int GetMonthofFrom()
+        {
+            return From.Month;
+        }
+
+        public int GetDayofFrom()
+        {
+            return From.Day;
+        }
+
+        public int GetDayofTo()
+        {
+            return To.Day;
+        }
+
     }
 }

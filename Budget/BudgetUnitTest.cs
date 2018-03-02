@@ -11,26 +11,65 @@ namespace Budget
         private  BudgetCalculation _calculator;
 
         [TestInitialize]
-        private void Init()
+        public void Init()
         {
             _calculator = new BudgetCalculation(_repository);
-            _repository.GetBudgets().Returns(new List<Budget>
-            {
-                new Budget
-                {
-                    YearMonth = "201801",
-                    Amount = 0
-                }
-            });
         }
 
         [TestMethod]
         public void NoBudget()
         {
             
-            var range = new InputRange("2018-01-01", "2018-01-31");
+            var range = new InputRange("2017-01-01", "2017-01-31");
+            _repository.GetBudgets().Returns(new List<Budget>
+            {
+                new Budget
+                {
+                    YearMonth = "201712",
+                    Amount = 0
+                }
+            });
             var actual = _calculator.GetValidBudgetBy(range);
             Assert.AreEqual(0, actual);
+        }
+
+        [TestMethod]
+        public void HaveBudget()
+        {
+            
+            var range = new InputRange("2018-01-01", "2018-01-31");
+            _repository.GetBudgets().Returns(new List<Budget>
+            {
+                new Budget
+                {
+                    YearMonth = "201801",
+                    Amount = 31000
+                }
+            });
+            var actual = _calculator.GetValidBudgetBy(range);
+            Assert.AreEqual(31000, actual);
+        }
+
+        [TestMethod]
+        public void HaveBudget_20180201_20180315()
+        {
+
+            var range = new InputRange("2018-02-01", "2018-03-15");
+            _repository.GetBudgets().Returns(new List<Budget>
+            {
+                new Budget
+                {
+                    YearMonth = "201802",
+                    Amount = 28
+                },
+                new Budget
+                {
+                    YearMonth = "201803",
+                    Amount = 3100
+                }
+            });
+            var actual = _calculator.GetValidBudgetBy(range);
+            Assert.AreEqual(1528, actual);
         }
     }
 }
