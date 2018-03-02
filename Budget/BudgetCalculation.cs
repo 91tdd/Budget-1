@@ -17,9 +17,7 @@ namespace Budget
         public decimal GetValidBudgetBy(InputRange inputRange)
         {
             var budget = _repo.GetBudgets();
-            var from = inputRange.From.ToString("yyyyMM");
-            if (inputRange.To.AddDays(1).Day == inputRange.From.Day)
-                return budget.Where(x => x.YearMonth == from).Select(d => d.Amount).FirstOrDefault();
+            
             var months = inputRange.GetRangeMonths();
             
             var result = 0;
