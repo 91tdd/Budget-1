@@ -28,7 +28,14 @@ namespace Budget
 
                 if (string.Compare(month.Key, inputRange.From.ToString("yyyyMM")) == 0)
                 {
-                    result += (totaldays - inputRange.GetDayofFrom()+1) * totalBudget / totaldays;
+                    if (months.Count == 1)
+                    {
+                        result = (inputRange.GetDayofTo() - inputRange.GetDayofFrom() + 1) * totalBudget / totaldays;
+                    }
+                    else
+                    {
+                        result += (totaldays - inputRange.GetDayofFrom() + 1) * totalBudget / totaldays;
+                    }
                     continue;
                 }
 
